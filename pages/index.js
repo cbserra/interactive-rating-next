@@ -1,8 +1,9 @@
 import Head from 'next/head'
-import Layout from '../components/layout'
-import Form from '../components/form'
-import ThankYou from '../components/thank-you'
 import { useState } from 'react'
+
+import Form from '../components/form'
+import Layout from '../components/layout'
+import ThankYou from '../components/thank-you'
 
 export default function Home() {
   const [formRating, setFormRating] = useState()
@@ -15,7 +16,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {!formRating && <Form formRating={formRating} setFormRating={setFormRating} />}
+      {!formRating && <Form setFormRating={setFormRating} />}
       {formRating && <ThankYou formRating={formRating} />}
 
     </Layout>

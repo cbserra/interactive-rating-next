@@ -1,17 +1,13 @@
 import Head from 'next/head'
-import Layout from '../components/layout'
-import Form from '../components/form'
-import ThankYou from '../components/thank-you'
-import { useState } from 'react'
 import { useRouter } from 'next/router'
+
+import Layout from '../components/layout'
+import ThankYou from '../components/thank-you'
 
 export default function ThankYouPage() {
     // non-JS submission
     const router = useRouter()
     const {rating} = router.query
-
-    // JS-submission
-    const [formRating, setFormRating] = useState()
 
   return (
     <Layout>
