@@ -1,10 +1,13 @@
+import Router from 'next/router'
+
 export default function handler(req, res) {
     // Get data submitted in request's body.
     const body = req.body
   
     // Optional logging to see the responses
     // in the command line where next.js app is running.
-    console.log('body: ', body)
+    console.debug('handling form submission via non-js...')
+    console.debug(`body: ${JSON.stringify(body)}`)
   
     // Guard clause checks for first and last name,
     // and returns early if they are not found
@@ -16,5 +19,5 @@ export default function handler(req, res) {
     // Found the name.
     // Sends a HTTP success code
     // res.status(200).json({ data: `You selected ${body.rating} out of ${body.maxRating}` })
-    res.redirect('/thank-you')
+    res.redirect(307, '/thank-you')
   }

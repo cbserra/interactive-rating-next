@@ -23,7 +23,6 @@ module.exports = {
         sans: ['Overpass', 'sans-serif']
       },
       spacing: {
-        5.5: '1.375rem',
         10.5: '2.625rem'
       }
     },

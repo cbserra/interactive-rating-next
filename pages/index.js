@@ -1,9 +1,12 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import Layout from '../components/layout'
 import Form from '../components/form'
+import ThankYou from '../components/thank-you'
+import { useState } from 'react'
 
 export default function Home() {
+  const [formRating, setFormRating] = useState()
+
   return (
     <Layout>
       <Head>
@@ -12,15 +15,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className='oval' >
-        <Image src='/images/icon-star.svg'className='w-[14px] h-[14px] ' width={'14px'} height={'14px'}/>
-      </div>
-      <h1>How did we do?</h1>
-      <p>
-        Please let us know how we did with your support request. 
-        All feedback is appreciated to help us improve our offering!
-      </p>
-      <Form />
+      {!formRating && <Form formRating={formRating} setFormRating={setFormRating} />}
+      {formRating && <ThankYou formRating={formRating} />}
 
     </Layout>
   )

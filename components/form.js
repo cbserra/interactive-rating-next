@@ -1,6 +1,9 @@
 import { useState } from "react"
+import Image from "next/image"
+import cx from 'classnames'
+import IconStar from '../public/images/icon-star.svg'
 
-export default function Form() {
+export default function Form({formRating, setFormRating}) {
     const [rating, setRating] = useState(-1)
 
     // Handles the submit event on form submit.
@@ -8,46 +11,60 @@ export default function Form() {
     // Stop the form from submitting and refreshing the page.
     event.preventDefault()
 
-    // Get data from the form.
-    const data = {
-      rating: event.target.rating.value,
-      maxRating: event.target.ratingMax.value
-    }
+    console.debug('submitting via javascript...')
 
-    // Send the data to the server in JSON format.
-    const jsonData = JSON.stringify(data)
-    console.table(jsonData)
+    setFormRating(event.target.rating.value)
 
-    // API endpoint where we send form data.
-    const endpoint = '/api/js-form'
+    // // Get data from the form.
+    // const data = {
+    //   rating: event.target.rating.value,
+    //   maxRating: event.target.ratingMax.value
+    // }
 
-    // Form the request for sending data to the server.
-    const options = {
-      // The method is POST because we are sending data.
-      method: 'POST',
-      // Tell the server we're sending JSON.
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      // Body of the request is the JSON data we created above.
-      body: jsonData,
-    }
+    // // Send the data to the server in JSON format.
+    // const jsonData = JSON.stringify(data)
+    // console.table(jsonData)
 
-    // Send the form data to our forms API on Vercel and get a response.
-    const response = await fetch(endpoint, options)
+    // // API endpoint where we send form data.
+    // const endpoint = '/api/form'
 
-    // Get the response data from server as JSON.
-    // If server returns the name submitted, that means the form works.
-    const result = await response.json()
-    alert(`Is this your rating?: ${result.data}`)
+    // // Form the request for sending data to the server.
+    // const options = {
+    //   // The method is POST because we are sending data.
+    //   method: 'POST',
+    //   // Tell the server we're sending JSON.
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   // Body of the request is the JSON data we created above.
+    //   body: jsonData,
+    // }
+
+    // // Send the form data to our forms API on Vercel and get a response.
+    // const response = await fetch(endpoint, options)
+
+    // // Get the response data from server as JSON.
+    // // If server returns the name submitted, that means the form works.
+    // const result = await response.json()
+    // alert(`Is this your rating?: ${result.data}`)
 
     // response.redirect(307, '/thank-you')
 
   }
 
     return (
-            <form className="my-6 flex flex-col" action="/thank-you" method="POST">
-            { /*onSubmit={handleSubmit}>*/}
+        <>
+            <header  className='flex flex-col'>
+                <div className='oval'>
+                    <Image src={IconStar} className='w-[14px] h-[14px] ' alt='star' width={'14px'} height={'14px'}/>
+                </div>
+            </header>
+            <h1>How did we do?</h1>
+            <p>
+                Please let us know how we did with your support request. 
+                All feedback is appreciated to help us improve our offering!
+            </p>
+            <form className="my-6 flex flex-col" action="/api/no-js-form" method="POST" onSubmit={handleSubmit}>
                 <fieldset className="flex items-center justify-between">
                     <input type="hidden" id="ratingMax" name="ratingMax" value="5" />
                     <Rating value={1} rating={rating} setRating={setRating} required={true} />
@@ -58,6 +75,7 @@ export default function Form() {
                 </fieldset>
                 <Submit />
             </form>
+        </>
     )
 }
 
@@ -71,16 +89,16 @@ function Rating({value, rating, setRating, required = false}) {
                     type='radio' 
                     name='rating' 
                     id={`rating-${value}`}
-                    className="peer bg-dark-blue hover:bg-orange checked:bg-medium-grey w-10.5 h-10.5 md:w-[51px] md:h-[51px] rounded-[50%]  border-none cursor-pointer" //w-0 h-0" 
+                    className={cx("peer bg-dark-blue hover:bg-orange checked:bg-medium-grey", 
+                                    "w-10.5 h-10.5 md:w-[51px] md:h-[51px] rounded-[50%] border-none")} //w-0 h-0" 
                     value={value} 
                     onChange={() => setRating(value)}
                     checked={checked}
                     required={required}
                 />
                 <span
-                    // role={"radio"} 
-                    // aria-checked={checked}
-                    className="peer-hover:bg-orange relative  font-bold hover:text-white cursor-pointer -left-1/2"
+                    className={cx("bg-transparent peer-hover:bg-orange  hover:text-white font-bold",
+                                    "relative cursor-pointer -left-1/2")}
                 >
                     {value}
                 </span>
